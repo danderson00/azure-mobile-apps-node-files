@@ -1,3 +1,7 @@
+﻿// ----------------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// ----------------------------------------------------------------------------
+
 var authenticateModule = require('azure-mobile-apps/src/express/middleware/authenticate'),
     authorizeModule = require('./authorize'),
     permissions = require('./permissions'),
