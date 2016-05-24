@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ----------------------------------------------------------------------------
 
-var permissions = module.exports = {
+module.exports = {
     // JSON.NET serializes enumerations to the name, even if explicit values are provided
     convertRequestValue: function (value) {
         switch(value.toLowerCase()) {

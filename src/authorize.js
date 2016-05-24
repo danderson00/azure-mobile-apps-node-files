@@ -4,7 +4,7 @@
 
 module.exports = function (configuration) {
     return function (req, res, next) {
-        table = configuration.tables[req.params.tableName];
+        var table = configuration.tables[req.params.tableName];
 
         if((specifiesAuthorization(table) || specifiesAuthorization(table.files)) && !authenticated())
             res.status(401).send('You must be logged in to use this application');

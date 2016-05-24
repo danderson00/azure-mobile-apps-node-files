@@ -54,7 +54,7 @@ describe('authorize', function () {
     });
 
     function getApp(tables) {
-        var app = express();
+        var app = express(),
             configuration = {
                 tableRootPath: '/tables',
                 auth: { secret: '0000' },

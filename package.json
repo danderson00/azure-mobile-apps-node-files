@@ -8,7 +8,8 @@
   "repository": "Azure/azure-mobile-apps-node-files",
   "license": "MIT",
   "scripts": {
-    "test": "npm run lint & mocha"
+    "test": "npm run lint & mocha",
+    "lint": "jshint ."
   },
   "dependencies": {
     "azure-mobile-apps": "^2.1.5",
