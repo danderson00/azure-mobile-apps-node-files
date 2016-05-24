@@ -1,8 +1,13 @@
-var permissions = require('./permissions'),
+var authenticateModule = require('azure-mobile-apps/src/express/middleware/authenticate'),
+    authorizeModule = require('./authorize'),
+    permissions = require('./permissions'),
+    bodyParser = require('body-parser'),
     express = require('express');
 
 module.exports = function (configuration, storage) {
-    var router = express.Router();
+    var router = express.Router(),
+        authenticate = authenticateModule(configuration),
+        authorize = authorizeModule(configuration);
 
     router.post(route('StorageToken'), constructMiddleware('token', function (api, req) {
         return api.token(req.body && req.body.Permissions); // the .NET implementation returns a container level token by default, omit passing the name here to maintain the behavior
@@ -19,29 +24,34 @@ module.exports = function (configuration, storage) {
     return router;
 
     function constructMiddleware(operationName, defaultOperation) {
-        return function (req, res, next) {
-            var api = constructFilesApi(req.params.tableName, req.params.id),
-                table = configuration.tables[req.params.tableName];
+        return [
+            authenticate,
+            authorize,
+            bodyParser.json(),
+            function (req, res, next) {
+                var api = constructFilesApi(req.params.tableName, req.params.id),
+                    table = configuration.tables[req.params.tableName];
 
-            if (!table || !table.files) {
-                next();
-            } else {
-                var configuredOperation = table.files[operationName],
-                    result;
+                if (!table || !table.files) {
+                    next();
+                } else {
+                    var configuredOperation = table.files[operationName],
+                        result;
 
-                // if the table has an operation configured, use that, otherwise, use the default
-                if(configuredOperation)
-                    result = configuredOperation(api, req.azureMobile);
-                else
-                    result = defaultOperation(api, req);
+                    // if the table has an operation configured, use that, otherwise, use the default
+                    if(configuredOperation)
+                        result = configuredOperation(api, req.azureMobile);
+                    else
+                        result = defaultOperation(api, req);
 
-                // if we were returned a promise, await the results, otherwise just return the results
-                if(result && result.then && result.then.constructor === Function)
-                    result.then(returnResults(res)).catch(next);
-                else
-                    returnResults(res)(result);
+                    // if we were returned a promise, await the results, otherwise just return the results
+                    if(result && result.then && result.then.constructor === Function)
+                        result.then(returnResults(res)).catch(next);
+                    else
+                        returnResults(res)(result);
+                }
             }
-        };
+        ];
     }
 
     // we can expose an api that doesn't require the user to specify the table name or id, we can pick these up from the route

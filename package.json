@@ -11,6 +11,7 @@
     "test": "npm run lint & mocha"
   },
   "dependencies": {
+    "azure-mobile-apps": "^2.1.4",
     "azure-storage": "^0.10.0",
     "body-parser": "^1.15.1",
     "es6-promise": "^3.2.1",

@@ -1,3 +1,4 @@
+// we should use the promise constructor in configuration
 var Constructor = typeof Promise === 'undefined'
     ? require('es6-promise').Promise
     : Promise;
