@@ -1,3 +1,7 @@
+﻿// ----------------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// ----------------------------------------------------------------------------
+
 // this corresponds with MobileServiceFile from the .NET implementation
 module.exports = {
     fromBlobItem: function (item, tableName, id) {

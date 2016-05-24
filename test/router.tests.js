@@ -1,4 +1,8 @@
-var routerModule = require('../src/router'),
+﻿// ----------------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// ----------------------------------------------------------------------------
+
+var router = require('../src/router'),
     sinon = require('sinon'),
     express = require('express'),
     supertest = require('supertest-as-promised');
@@ -76,7 +80,7 @@ describe('router', function () {
 
     function getApp(configuration, storage) {
         var app = express();
-        app.use(routerModule(configuration, storage));
+        app.use(router(configuration, storage));
         return app;
     }
 });

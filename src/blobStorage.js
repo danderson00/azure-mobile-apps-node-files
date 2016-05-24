@@ -1,3 +1,7 @@
+﻿// ----------------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// ----------------------------------------------------------------------------
+
 var fileData = require('./fileData'),
     permissions = require('./permissions'),
     promises = require('./promises'),
