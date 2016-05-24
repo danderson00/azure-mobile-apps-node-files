@@ -17,7 +17,7 @@ module.exports = function (configuration) {
                 var token = blobs.generateSharedAccessSignature(getContainerName(tableName, id), blobName, {
                     AccessPolicy: {
                         Permissions: permissions.convertRequestValue(permission),
-                        Expiry: new Date((new Date()).setMinutes((new Date()).getMinutes() + 60)) // now + 60 minutes
+                        Expiry: new Date(Date.now() + 1000 * 60 * 60)
                     }
                 });
 

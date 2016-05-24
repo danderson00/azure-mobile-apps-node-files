@@ -14,7 +14,8 @@ module.exports = function (configuration, storage) {
         authorize = authorizeModule(configuration);
 
     router.post(route('StorageToken'), constructMiddleware('token', function (api, req) {
-        return api.token(req.body && req.body.Permissions); // the .NET implementation returns a container level token by default, omit passing the name here to maintain the behavior
+        // the .NET implementation returns a container level token by default, omit passing the name here to maintain the behavior
+        return api.token(req.body && req.body.Permissions);
     }));
 
     router.get(route('MobileServiceFiles'), constructMiddleware('list', function (api, req) {
