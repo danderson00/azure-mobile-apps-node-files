@@ -23,7 +23,7 @@ module.exports = function (configuration) {
 
                 return {
                     RawToken: "?" + token,
-                    ResourceUri: blobs.getUrl(getContainerName(tableName, id)),
+                    ResourceUri: blobs.getUrl(getContainerName(tableName, id, blobName)),
                     Permissions: permission,
                     Scope: blobName ? 1 : 0
                 };
