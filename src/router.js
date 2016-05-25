@@ -15,18 +15,18 @@ module.exports = function (configuration, storage, logger) {
         authorize = authorizeModule(configuration);
 
     router.post(route('StorageToken'), constructMiddleware('token', function (api, req) {
-        logger.silly(format('Generating SAS token for %s (%s)', req.params.tableName, req.params.id));
+        logger.silly(format('Generating SAS token for %s (%s)', req.params.tableName.toLowerCase(), req.params.id));
         // the .NET implementation returns a container level token by default, omit passing the name here to maintain the behavior
         return api.token(req.body && req.body.Permissions);
     }));
 
     router.get(route('MobileServiceFiles'), constructMiddleware('list', function (api, req) {
-        logger.silly(format('Listing files for %s (%s)', req.params.tableName, req.params.id));
+        logger.silly(format('Listing files for %s (%s)', req.params.tableName.toLowerCase(), req.params.id));
         return api.list();
     }));
 
     router.delete(route('MobileServiceFiles/:blobName'), constructMiddleware('delete', function (api, req) {
-        logger.silly(format('Deleting %s from %s (%s)', req.params.blobName, req.params.tableName, req.params.id));
+        logger.silly(format('Deleting %s from %s (%s)', req.params.blobName, req.params.tableName.toLowerCase(), req.params.id));
         return api.delete(req.params.blobName);
     }));
 
