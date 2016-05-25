@@ -25,7 +25,7 @@ module.exports = {
             case 'all':
                 return 'rwdla';
             default:
-                return 'r';
+                return value;
         }
     }
 }

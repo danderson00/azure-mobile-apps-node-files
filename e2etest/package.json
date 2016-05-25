@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "dependencies": {
     "azure-mobile-apps": "Azure/azure-mobile-apps-node",
-    "azure-mobile-apps-files": "Azure/azure-mobile-apps-node-files#initial",
+    "azure-mobile-apps-files": "Azure/azure-mobile-apps-node-files",
     "express": "^4.13.4",
     "sqlite3": "^3.1.4"
   }

@@ -1,9 +1,8 @@
 {
   "name": "azure-mobile-apps-files",
   "version": "0.0.1",
-  "description": "Add simple file storage capabilities to the azure-mobile-apps server.",
+  "description": "Add simple yet powerful file storage capabilities to the azure-mobile-apps server.",
   "main": "src/index.js",
-  "typings": "typings/main.d.ts",
   "author": "Microsoft",
   "repository": "Azure/azure-mobile-apps-node-files",
   "license": "MIT",
