@@ -60,7 +60,7 @@ describe('authorize', function () {
                 auth: { secret: '0000' },
                 tables: tables
             };
-        app.use(router(configuration, getBlobStorageMock()));
+        app.use(router(configuration, getBlobStorageMock(), { silly: sinon.spy() }));
         return app;
     }
 

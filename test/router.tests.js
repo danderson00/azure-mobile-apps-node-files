@@ -80,7 +80,7 @@ describe('router', function () {
 
     function getApp(configuration, storage) {
         var app = express();
-        app.use(router(configuration, storage));
+        app.use(router(configuration, storage, { silly: sinon.spy() }));
         return app;
     }
 });
