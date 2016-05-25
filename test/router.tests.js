@@ -70,6 +70,18 @@ describe('router', function () {
             });
     });
 
+    it('table name on route is case insensitive', function () {
+        var configuration = {
+                tableRootPath: '/tables',
+                tables: { todoitem: { files: true } }
+            },
+            app = getApp(configuration, getBlobStorageMock());
+
+        return supertest(app)
+            .post('/tables/TodoItem/1/StorageToken')
+            .expect(200);
+    });
+
     function getBlobStorageMock() {
         return {
             token: sinon.spy(),

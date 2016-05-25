@@ -1,12 +1,13 @@
 ﻿// ----------------------------------------------------------------------------
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ----------------------------------------------------------------------------
+var utilities = require('./utilities');
 
 module.exports = function (configuration) {
     return function (req, res, next) {
-        var table = configuration.tables[req.params.tableName];
+        var table = utilities.caseInsensitiveProperty(configuration.tables, req.params.tableName);
 
-        if((specifiesAuthorization(table) || specifiesAuthorization(table.files)) && !authenticated())
+        if(table && (specifiesAuthorization(table) || specifiesAuthorization(table.files)) && !authenticated())
             res.status(401).send('You must be logged in to use this application');
         else
             next();

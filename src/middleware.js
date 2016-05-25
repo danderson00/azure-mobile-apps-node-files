@@ -1,13 +1,14 @@
 // ----------------------------------------------------------------------------
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ----------------------------------------------------------------------------
-var permissions = require('./permissions');
+var permissions = require('./permissions'),
+    utilities = require('./utilities');
 
 module.exports = {
     construct: function(configuration, storage, operationName, defaultOperation) {
         return function (req, res, next) {
             var api = constructFilesApi(req.params.tableName, req.params.id),
-                table = configuration.tables[req.params.tableName];
+                table = utilities.caseInsensitiveProperty(configuration.tables, req.params.tableName);
 
             if (!table || !table.files) {
                 next();
