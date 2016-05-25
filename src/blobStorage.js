@@ -9,7 +9,7 @@ var fileData = require('./fileData'),
     format = require('util').format;
 
 module.exports = function (configuration) {
-    var blobs = storage.createBlobService(configuration.account, configuration.key);
+    var blobs = storage.createBlobService(configuration.connectionString || configuration.account, configuration.key);
 
     return {
         token: function (tableName, id, permission, blobName) {
