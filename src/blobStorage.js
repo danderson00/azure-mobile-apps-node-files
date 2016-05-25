@@ -23,7 +23,7 @@ module.exports = function (configuration) {
 
                 return {
                     RawToken: "?" + token,
-                    ResourceUri: getResourceUri(tableName, id),
+                    ResourceUri: blobs.getUrl(getContainerName(tableName, id)),
                     Permissions: permission,
                     Scope: blobName ? 1 : 0
                 };
@@ -48,10 +48,6 @@ module.exports = function (configuration) {
 
     function getContainerName(tableName, id) {
         return format("%s-%s", tableName, id).toLowerCase();
-    }
-
-    function getResourceUri(tableName, id) {
-        return format("https://%s.blob.core.windows.net/%s", configuration.account, getContainerName(tableName, id));
     }
 
     function executeBlobOperation(tableName, id, operation) {
