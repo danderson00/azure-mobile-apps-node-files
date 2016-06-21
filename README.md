@@ -16,7 +16,17 @@ management plugin and loads it automatically.
 ## Usage
 
 First, add a storage account data connection using the Data Connections section
-of the portal.
+of the portal, or if debugging locally, add a file called `azureMobile.js` to
+the root folder of your project that contains the following:
+
+``` javascript
+module.exports = {
+    storage: {
+        account: 'name of Azure Storage account',
+        key: 'full access key for above Azure Storage account'
+    }
+}
+```
 
 File management can then be added to a table by simply adding a files property
 to a table definition:
