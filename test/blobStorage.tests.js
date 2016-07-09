@@ -2,12 +2,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ----------------------------------------------------------------------------
 
-var expect = require('chai').expect,
+var blobStorage = require('../src/blobStorage'),
+    expect = require('chai').expect,
     configuration = { };
 
 describe('blobStorage', function () {
-    var blobClient = mock(),
-        storage = require('../src/blobStorage')(blobClient, configuration);
+    var blobClient, storage;
+
+    beforeEach(function () {
+        blobClient = mock();
+        storage = blobStorage(blobClient, configuration);
+    });
 
     it('token sets response properties from client', function () {
         return storage.token('table', 1).then(function (token) {
@@ -30,7 +35,6 @@ describe('blobStorage', function () {
 
         return storage.delete('table', 1).then(function () {
             expect(blobClient.current.container).to.equal('table_1');
-            configuration.containerResolver = undefined;
         });
     });
 });
