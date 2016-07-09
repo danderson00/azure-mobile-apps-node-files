@@ -4,7 +4,7 @@
 
 var fileData = require('./fileData'),
     permissions = require('./permissions'),
-    promises = require('./promises'),
+    promises = require('azure-mobile-apps/src/utilities/promises'),
     format = require('util').format;
 
 module.exports = function (blobClient, configuration) {
