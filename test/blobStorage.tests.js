@@ -3,31 +3,56 @@
 // ----------------------------------------------------------------------------
 
 var expect = require('chai').expect,
-    config = {
-        account: '',
-        key: ''
+    configuration = { };
+
+describe('blobStorage', function () {
+    var blobClient = mock(),
+        storage = require('../src/blobStorage')(blobClient, configuration);
+
+    it('token sets response properties from client', function () {
+        return storage.token('table', 1).then(function (token) {
+            expect(token.ResourceUri).to.equal('url');
+            expect(token.RawToken).to.equal('?token');
+            expect(blobClient.current.container).to.equal('table-1');
+        });
+    });
+
+    it('list returns entries from client', function () {
+        return storage.list('table', 1).then(function (list) {
+            expect(list.length).to.equal(1);
+        });
+    });
+
+    it('container name is set from resolver', function () {
+        configuration.containerResolver = function (table, id) {
+            return table + '_' + id;
+        };
+
+        return storage.delete('table', 1).then(function () {
+            expect(blobClient.current.container).to.equal('table_1');
+            configuration.containerResolver = undefined;
+        });
+    });
+});
+
+function mock() {
+    var api = {
+        generateSharedAccessSignature: operation('token'),
+        getUrl: operation('url'),
+        listBlobsSegmented: operation({ entries: [{}] }),
+        deleteBlob: operation(),
+        createContainerIfNotExists: operation(),
     };
 
-if(config.account && config.key)
-    describe('blobStorage', function () {
-        var storage = require('../src/blobStorage')(config);
+    return api;
 
-        it('token returns SAS for container', function () {
-            return storage.token('table', 1).then(function (token) {
-                expect(token.ResourceUri).to.be.a('string');
-            });
-        });
-
-        it('list returns all blobs in a container', function () {
-            return storage.list('table', 1).then(function (list) {
-                expect(list).to.an('array');
-            });
-        });
-
-        // it('delete removes blob from container', function () {
-        //     storage.token('table', 1, null, null, function (error, token) {
-        //         console.dir(token)
-        //         done(error)
-        //     });
-        // });
-    });
+    function operation(value) {
+        return function (container, blob) {
+            api.current = { container: container, blob: blob };
+            var callback = arguments[arguments.length - 1];
+            if(typeof callback === 'function')
+                callback(undefined, value);
+            return value;
+        };
+    }
+}
