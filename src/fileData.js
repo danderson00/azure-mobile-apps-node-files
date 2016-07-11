@@ -11,7 +11,7 @@ module.exports = {
             TableName: tableName,
             ParentId: id,
             Length: item.contentLength,
-            ContentMD5: item.contentSettings.contentMD5,
+            ContentMD5: item.contentSettings && item.contentSettings.contentMD5,
             LastModified: new Date(item.lastModified),
             Metadata: item.contentSettings
         };
