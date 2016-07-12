@@ -4,6 +4,7 @@
 
 var authenticateModule = require('azure-mobile-apps/src/express/middleware/authenticate'),
     authorizeModule = require('./authorize'),
+    perUserModule = require('./perUser'),
     middleware = require('./middleware'),
     bodyParser = require('body-parser'),
     express = require('express'),
@@ -12,7 +13,8 @@ var authenticateModule = require('azure-mobile-apps/src/express/middleware/authe
 module.exports = function (configuration, storage, logger) {
     var router = express.Router(),
         authenticate = authenticateModule(configuration),
-        authorize = authorizeModule(configuration);
+        authorize = authorizeModule(configuration),
+        perUser = perUserModule(configuration);
 
     router.post(route('StorageToken'), constructMiddleware('token', function (api, req) {
         logger.silly(format('Generating SAS token for %s (%s)', req.params.tableName.toLowerCase(), req.params.id));
@@ -40,6 +42,7 @@ module.exports = function (configuration, storage, logger) {
         return [
             authenticate,
             authorize,
+            perUser,
             bodyParser.json(),
             middleware.construct(configuration, storage, operationName, defaultOperation)
         ];
