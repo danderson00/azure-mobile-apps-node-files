@@ -26,12 +26,7 @@ module.exports = function (blobClient, configuration) {
         },
         list: function (containerName) {
             return executeBlobOperation(containerName, function (callback) {
-                blobClient.listBlobsSegmented(containerName, null, function (error, results) {
-                    if(error)
-                        callback(error);
-                    else
-                        callback(null, results);
-                });
+                blobClient.listBlobsSegmented(containerName, null, callback);
             });
         },
         delete: function (containerName, name, callback) {
