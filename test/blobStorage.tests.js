@@ -27,16 +27,6 @@ describe('blobStorage', function () {
             expect(list.entries.length).to.equal(1);
         });
     });
-
-    // it('container name is set from resolver', function () {
-    //     configuration.containerResolver = function (table, id) {
-    //         return table + '_' + id;
-    //     };
-
-    //     return storage.delete('table-1').then(function () {
-    //         expect(blobClient.current.container).to.equal('table_1');
-    //     });
-    // });
 });
 
 function mock() {
