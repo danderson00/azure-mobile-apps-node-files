@@ -21,11 +21,8 @@ module.exports = function (configuration) {
         }
 
         function queryPredicate() {
-            var id = req.params.id,
-                userId = context.user && context.user.id,
-                predicate = { id: id };
-
-            predicate[configuration.userIdColumn] = userId;
+            var predicate = { id: req.params.id };
+            predicate[configuration.userIdColumn] = context.user && context.user.id;
             return predicate;
         }
     };
