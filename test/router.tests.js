@@ -48,7 +48,7 @@ describe('router', function () {
                 tables: { todoitem: {
                     files: {
                         token: sinon.stub().returns('token'),
-                        list: sinon.stub().returns([]),
+                        list: sinon.stub().returns('list'),
                         delete: sinon.stub().returns('delete')
                     }
                 } }
@@ -61,7 +61,7 @@ describe('router', function () {
             .then(function () {
                 return supertest(app)
                     .get('/tables/todoitem/1/MobileServiceFiles')
-                    .expect(200, '[]');
+                    .expect(200, '"list"');
             })
             .then(function () {
                 return supertest(app)

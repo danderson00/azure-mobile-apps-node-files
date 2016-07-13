@@ -35,22 +35,24 @@ module.exports = {
 
             // we can expose an api that doesn't require the user to specify the table name or id, we can pick these up from the route
             function constructFilesApi() {
-                return {
+                var api = {
                     token: function (permission, blobName) {
-                        return storage.token(getContainerName(), permission, blobName);
+                        return storage.token(api.containerName, permission, blobName);
                     },
                     list: function () {
-                        return storage.list(getContainerName());
+                        return storage.list(api.containerName);
                     },
                     delete: function (blobName) {
-                        return storage.delete(getContainerName(), blobName);
+                        return storage.delete(api.containerName, blobName);
                     },
-                    permissions: permissions
+                    permissions: permissions,
+                    containerName: getContainerName()
                 };
+                return api;
 
                 function getContainerName() {
-                    if(configuration.containerResolver && typeof configuration.containerResolver === 'function')
-                        return configuration.containerResolver(tableName, id);
+                    if(configuration.storage && configuration.storage.containerResolver && typeof configuration.storage.containerResolver === 'function')
+                        return configuration.storage.containerResolver(tableName, id, req.azureMobile.user);
                     return format("%s-%s", tableName, id).toLowerCase();
                 }
             }
