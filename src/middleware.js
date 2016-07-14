@@ -40,7 +40,9 @@ module.exports = {
                         return storage.token(api.containerName, permission, blobName);
                     },
                     list: function () {
-                        return storage.list(api.containerName);
+                        return storage.list(api.containerName).then(function (results) {
+                            return results.entries.map(fileData.mapBlobItem(tableName, id));
+                        });
                     },
                     delete: function (blobName) {
                         return storage.delete(api.containerName, blobName);
@@ -59,9 +61,7 @@ module.exports = {
 
             function returnResults() {
                 return function (results) {
-                    res.status(200).json(results && results.constructor === Array 
-                        ? results.map(fileData.mapBlobItem(tableName, id))
-                        : results);
+                    res.status(200).json(results); 
                 };
             }
         };

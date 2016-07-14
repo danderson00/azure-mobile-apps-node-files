@@ -85,7 +85,7 @@ describe('router', function () {
     function getBlobStorageMock() {
         return {
             token: sinon.spy(),
-            list: sinon.spy(),
+            list: sinon.stub().returns({ then: sinon.spy() }),
             delete: sinon.spy()
         }
     }
