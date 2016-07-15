@@ -11,10 +11,12 @@
     "lint": "jshint ."
   },
   "dependencies": {
-    "azure-mobile-apps": "^2.1.6",
     "azure-storage": "^1.0.1",
     "body-parser": "^1.15.1",
     "express": "^4.13.4"
+  },
+  "peerDependencies": {
+    "azure-mobile-apps": "^2.2.0"    
   },
   "devDependencies": {
     "chai": "^3.0.0",
